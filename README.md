@@ -16,7 +16,7 @@ change permission if needed `chmod +x run_tests.sh`
 
 `mulitple_downloader.download` handles download of multiple files using `single_downloader`. To extend for new protocols implement a `single_downloader.download` and pass it as a argument to `mulitple_downloader.download`
 
-`single_downloader.download` handles download of one file, if support for new protocol or auth required modify or create your own `download` method
+`single_downloader.download` handles download of one file, if support is needed for new protocol or auth, modify or create a new `single_downloader.download` method and pass it to `mulitple_downloader.download`
 
 # Example
 
