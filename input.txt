@@ -1,0 +1,4 @@
+ftp://speedtest.tele2.net/10GB.zip
+abcd://abcd.efg/hij
+ftp://speedtest.tele2.net/1GB.zip
+http://www.google.com
