@@ -1,7 +1,7 @@
 import getopt, sys
 import os
 import json
-import time, random, sys, collections
+import collections
 from multiprocessing import Process as Task, Queue
 import logging
 
@@ -18,7 +18,7 @@ def printProgress(progress):
         if percent == -1: # -1 means download failed
             sys.stdout.write("%s [ Failed to download ]\n" % (url))
             continue
-        bar = ('=' * int(percent * 20)).ljust(20)
+        bar = ('=' * int(percent * 100)).ljust(100)
         percent = float(percent * 100.0)
         sys.stdout.write("%s [%s] %s%%\n" % (url, bar, round(percent, 2)))
     sys.stdout.flush()
@@ -54,20 +54,20 @@ def startDownLoadTask(singleDownLoader, url, destination, status, workers, progr
     workers.append(child)
     progress[url] = 0.0
 
-def download(sources, singleDownLoader, destination):
+def download(sources, singleDownLoaderMethod, destination):
     """ Download resources from given sources to destination
 
     Parameters:
-    sources          -- iterable object of download sources/urls
-    singleDownLoader -- download method to download given url
-    destination      -- path of the directory to save the file
+    sources                -- iterable object of download sources/urls
+    singleDownLoaderMethod -- download method to download given url
+    destination            -- path of the directory to save the file
     """
     status = Queue()
     progress = collections.OrderedDict()
     workers = []
     try:
         for url in sources:
-            startDownLoadTask(singleDownLoader, url, destination, status, workers, progress)
+            startDownLoadTask(singleDownLoaderMethod, url, destination, status, workers, progress)
         startProgressDisplay(workers, status, progress)
     except Exception as e:
         logging.exception(e)
